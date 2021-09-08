@@ -76,7 +76,7 @@ public class TransactionRestController {
 		trans.setReceiverbic(bc.findBankByBIC(tras.getReceiverBic()));
 		trans.setReceiveraccounholdername(tras.getRaccountname());
 		trans.setReceiveraccounholdernumber(tras.getRaccountnumber());
-		trans.setTransfertypecode(tts.findBytype(tras.getTransfertype()));
+		//trans.setTransfertypecode(tts.findBytype(tras.getTransfertype()));
 		trans.setMessagecode(ms.findmessage(tras.getMessagecode()));
 		trans.setCurrencyamount(tras.getInramount());
 		trans.setInramount(tras.getInramount());

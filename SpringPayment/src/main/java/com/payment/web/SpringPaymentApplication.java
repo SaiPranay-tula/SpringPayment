@@ -13,7 +13,7 @@ import com.payment.web.beans.Customer;
 import com.payment.web.beans.Logger;
 import com.payment.web.beans.Transaction;
 import com.payment.web.beans.TransferTypes;
-import com.payment.web.custom.Test;
+
 import com.payment.web.custom.TransactTab;
 import com.payment.web.repository.TransferTypesRepository;
 import com.payment.web.service.BankService;
