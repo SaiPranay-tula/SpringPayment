@@ -48,18 +48,18 @@ public class SpringPaymentApplication {
 //		
 //		TransferTypesService ts = context.getBean(TransferTypesService.class);
 //		System.out.println(ts.getTransferTypes());
-		
-		TransactionService tts = context.getBean(TransactionService.class);
-		System.out.println(tts.getTransactionsByID("71319440983198"));
-		
-		TransactTab tras = new TransactTab("71319440983198","ABNAINBBAHM",
-									"Pranay","324234234324","C",
-									"CHQB",234343.34,120.2);
-		System.out.println(tras);
-		
-		CustomerService cservice= context.getBean(CustomerService.class);
-		System.out.println(cservice.findCustomer("69652133523248"));
-		
+//		
+//		TransactionService tts = context.getBean(TransactionService.class);
+//		System.out.println(tts.getTransactionsByID("71319440983198"));
+//		
+//		TransactTab tras = new TransactTab("71319440983198","ABNAINBBAHM",
+//									"Pranay","324234234324","C",
+//									"CHQB",234343.34,120.2);
+//		System.out.println(tras);
+//		
+//		CustomerService cservice= context.getBean(CustomerService.class);
+//		System.out.println(cservice.findCustomer("69652133523248"));
+//		
 		//System.out.println(new Test().insertTransaction(tras));
 		//System.out.println(cservice.findCustomerById(tras.getCustomerid()));
 		

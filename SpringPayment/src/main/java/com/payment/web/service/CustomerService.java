@@ -2,15 +2,11 @@ package com.payment.web.service;
 
 import java.util.Optional;
 
-import javax.persistence.EntityNotFoundException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.payment.web.beans.Customer;
-import com.payment.web.beans.CustomerUser;
 import com.payment.web.repository.CustomerRepository;
-import com.payment.web.repository.CustomerUserRepository;
 
 @Service
 public class CustomerService {
@@ -24,15 +20,24 @@ public class CustomerService {
 	
 	public Customer findCustomer(String id) {
 		
+		
+		if(this.repo.findById(id).isPresent())
 		return this.repo.findById(id).get();
+		return null;
 				
 	}
 	
 	public boolean updateAmount(Customer customer,double amnt) {
 		Optional<Customer> cust=repo.findById(customer.getcustomerid());
-		if(cust!=null) {
-			cust.get().setclearbalance(amnt);
-			return true; 
+		if(cust.isPresent()) {
+			double total = amnt+(amnt*0.025);
+			if(cust.get().getclearbalance()>total) {
+				double balance=cust.get().getclearbalance()-total;
+			cust.get().setclearbalance(balance);
+			
+			return true;
+			}
+			return false;
 		}
 		return false;
 	}

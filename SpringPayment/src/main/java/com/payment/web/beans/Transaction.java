@@ -3,7 +3,7 @@ package com.payment.web.beans;
 
 
 import java.util.Date;
-
+import java.util.Optional;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -75,8 +75,8 @@ public class Transaction {
 		return customer;
 	}
 
-	public void setCustomerid(Customer customerid) {
-		this.customer = customerid;
+	public void setCustomerid(Customer optional) {
+		this.customer = optional;
 	}
 
 	public Currency getCurrencycode() {

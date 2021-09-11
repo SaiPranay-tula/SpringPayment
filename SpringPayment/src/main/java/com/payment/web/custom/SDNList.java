@@ -27,7 +27,7 @@ public class SDNList {
 	}
 	public static boolean Search(String name) throws CsvValidationException, FileNotFoundException, IOException {
 		parsing();
-		System.out.println(names);
+		//System.out.println(names);
 		for(String Mnames:names)
 	{
 			if(Mnames.matches(name)) {

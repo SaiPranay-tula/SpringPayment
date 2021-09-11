@@ -1,6 +1,8 @@
 package com.payment.web.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,16 +20,16 @@ public class BankRestController {
 	private BankService service;
 	
 	@GetMapping("/bank/{bid}")
-	public Bank findBankByBID(@PathVariable String bid) {
-		Bank b = null;
-		try {
-		b = service.findBankByBIC(bid);
-		}
-		catch(Exception e) {
-			
-		}
-		return b;
+	public ResponseEntity<Object> findBankByBID(@PathVariable String bid) {
+		Bank b = service.findBankByBIC(bid);
+		if(b!=null) {
+		    return ResponseEntity.ok().body(b);
+		} else {
+			return new ResponseEntity<>("BID not found",HttpStatus.NOT_FOUND);
+				}
 		
+	
 	}
 
 }
+
