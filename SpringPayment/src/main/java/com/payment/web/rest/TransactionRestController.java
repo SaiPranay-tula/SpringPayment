@@ -23,12 +23,11 @@ import com.payment.web.service.CurrencyService;
 import com.payment.web.service.CustomerService;
 import com.payment.web.service.MessageService;
 import com.payment.web.service.TransactionService;
+import com.payment.web.service.TransferTypesService;
 
 @RestController("/transaction")
 @CrossOrigin()
 public class TransactionRestController {
-
-	
 
 	@Autowired
 	private TransactionService tservice;
@@ -48,25 +47,35 @@ public class TransactionRestController {
 	@Autowired
 	private MessageService ms;
 
+	@Autowired
+	private TransferTypesService tts;
 
 	@PostMapping("/success/insert")
 	public ResponseEntity<Object> insertTransaction(@RequestBody TransactTab tras) {
 		System.out.println("transaction" + tras);
-		Date date = new java.util.Date();
-
 		Transaction trans = new Transaction();
-		trans.setCustomerid(sc.findCustomer(tras.getCustomerid()));
-		trans.setCurrencycode(csi.findById("INR"));
-		trans.setSenderbic(bc.findBankByBIC("ACBLINBBXXX"));
-		trans.setReceiverbic(bc.findBankByBIC(tras.getReceiverBic()));
-		trans.setReceiveraccounholdername(tras.getRaccountname());
-		trans.setReceiveraccounholdernumber(tras.getRaccountnumber());
-		// trans.setTransfertypecode(tts.findBytype(tras.getTransfertype()));
-		trans.setMessagecode(ms.findmessage(tras.getMessagecode()));
-		trans.setCurrencyamount(tras.getInramount());
-		trans.setInramount(tras.getInramount());
-		trans.setTransferfees(tras.getTransferfee());
-		trans.setDate(date);
+		Date date = new java.util.Date();
+		try {
+			System.out.println(tras);
+
+			trans.setCustomerid(sc.findCustomer(tras.getCustomerid()));
+			trans.setCurrencycode(csi.findById("INR"));
+			trans.setSenderbic(bc.findBankByBIC("ACBLINBBXXX"));
+			trans.setReceiverbic(bc.findBankByBIC(tras.getReceiverBic()));
+			trans.setReceiveraccounholdername(tras.getRaccountname());
+			trans.setReceiveraccounholdernumber(tras.getRaccountnumber());
+			trans.setTransfertypecode(tts.findBytype(tras.getTransfertype()));
+			trans.setMessagecode(ms.findmessage(tras.getMessagecode()));
+			trans.setCurrencyamount(tras.getInramount());
+			trans.setInramount(tras.getInramount());
+			trans.setTransferfees(tras.getTransferfee());
+			trans.setDate(date);
+
+		} catch (Exception E) {
+			System.out.println(E);
+			return new ResponseEntity<>("Transaction Falied", HttpStatus.FORBIDDEN);
+
+		}
 
 		if (cservice.updateAmount(trans.getCustomerid(), trans.getInramount()) && tservice.insertTransaction(trans))
 			return new ResponseEntity<>("Transaction SuccessFull", HttpStatus.CREATED);
@@ -86,10 +95,13 @@ public class TransactionRestController {
 	}
 
 	@GetMapping("/transaction/receiver/{receivername}")
-	public boolean isValid(@PathVariable String receivername)
+	public ResponseEntity<Object> isValid(@PathVariable String receivername)
 			throws CsvValidationException, FileNotFoundException, IOException {
+		if (SDNList.Search(receivername)) {
+			return ResponseEntity.ok().body(true);
+		}
 
-		return SDNList.Search(receivername);
+		return ResponseEntity.ok().body(false);
 
 	}
 
