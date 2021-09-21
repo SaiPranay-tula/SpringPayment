@@ -30,6 +30,11 @@ public class BankRestController {
 		
 	
 	}
+	
+	@GetMapping("/")
+	public String welcome() {
+		return "Welcome to Security";
+	}
 
 }
 

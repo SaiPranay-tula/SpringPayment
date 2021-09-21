@@ -6,8 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration;
 import org.springframework.context.ApplicationContext;
-
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.payment.web.beans.Customer;
 import com.payment.web.beans.Logger;
@@ -24,17 +28,27 @@ import com.payment.web.service.MessageService;
 import com.payment.web.service.TransactionService;
 import com.payment.web.service.TransferTypesService;
 
-
-
 @SpringBootApplication
 public class SpringPaymentApplication {
 
+	@Bean
+	public WebMvcConfigurer corsConfigurer() {
+		return new WebMvcConfigurer() {
+
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				registry.addMapping("/*").allowedHeaders("*").allowedOrigins("*")
+				.allowedMethods("*").allowCredentials(true);
+						
+			}
+		};
+
+	}
+
 	public static void main(String[] args) {
-		ApplicationContext context = 
-				SpringApplication.run(SpringPaymentApplication.class, args);
+		ApplicationContext context = SpringApplication.run(SpringPaymentApplication.class, args);
 		System.out.println("HELLo");
-		
-		
+
 //		
 //		CustomerUserService service = context.getBean(CustomerUserService.class);
 //		System.out.println("Service-");
@@ -60,12 +74,9 @@ public class SpringPaymentApplication {
 //		CustomerService cservice= context.getBean(CustomerService.class);
 //		System.out.println(cservice.findCustomer("69652133523248"));
 //		
-		//System.out.println(new Test().insertTransaction(tras));
-		//System.out.println(cservice.findCustomerById(tras.getCustomerid()));
-		
-		
-		
-		
+		// System.out.println(new Test().insertTransaction(tras));
+		// System.out.println(cservice.findCustomerById(tras.getCustomerid()));
+
 	}
 
 }

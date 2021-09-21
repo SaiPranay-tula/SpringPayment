@@ -31,7 +31,8 @@ public class CustomerService {
 		Optional<Customer> cust=repo.findById(customer.getcustomerid());
 		if(cust.isPresent()) {
 			double total = amnt+(amnt*0.025);
-			if(cust.get().getclearbalance()>total) {
+			
+			if(cust.get().getclearbalance()>total || cust.get().getoverdraftflag()==1) {
 				double balance=cust.get().getclearbalance()-total;
 			cust.get().setclearbalance(balance);
 			
